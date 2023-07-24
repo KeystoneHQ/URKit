@@ -7,7 +7,6 @@
 
 import Foundation
 import DCBOR
-import BCCrypto
 
 // Implements Luby transform code rateless coding
 // https://en.wikipedia.org/wiki/Luby_transform_code
@@ -33,7 +32,6 @@ public final class FountainEncoder {
 
     let checksum: UInt32
     let fragments: [Data]
-    let fragmentChooser: FragmentChooser
 
     /// This becomes `true` when the minimum number of parts
     /// to relay the complete message have been generated
@@ -113,18 +111,17 @@ public final class FountainEncoder {
 
     public init(message: Data, maxFragmentLen: Int, firstSeqNum: UInt32 = 0, minFragmentLen: Int = 10) {
         assert(message.count <= UInt32.max)
-        self.messageLen = message.count
-        self.checksum = crc32(message)
+        messageLen = message.count
+        checksum = CRC32.checksum(data: message)
         self.maxFragmentLen = maxFragmentLen
-        self.fragmentLen = Self.findNominalFragmentLength(messageLen: message.count, minFragmentLen: minFragmentLen, maxFragmentLen: maxFragmentLen)
-        self.fragments = Self.partitionMessage(message, fragmentLen: fragmentLen)
-        self.seqNum = firstSeqNum
-        fragmentChooser = FragmentChooser(seqLen: fragments.count, checksum: checksum)
+        fragmentLen = Self.findNominalFragmentLength(messageLen: message.count, minFragmentLen: minFragmentLen, maxFragmentLen: maxFragmentLen)
+        fragments = Self.partitionMessage(message, fragmentLen: fragmentLen)
+        seqNum = firstSeqNum
     }
 
     public func nextPart() -> Part {
         seqNum &+= 1 // wrap at period 2^32
-        lastPartIndexes = fragmentChooser.chooseFragments(at: seqNum)
+        lastPartIndexes = chooseFragments(seqNum: seqNum, seqLen: seqLen, checksum: checksum)
         let mixed = mix(partIndexes: lastPartIndexes)
         return Part(seqNum: seqNum, seqLen: seqLen, messageLen: messageLen, checksum: checksum, data: mixed)
     }

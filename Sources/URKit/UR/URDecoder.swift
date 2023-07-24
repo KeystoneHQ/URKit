@@ -43,9 +43,8 @@ public final class URDecoder {
     }
 
     static func decode(type: String, body: String) throws -> UR {
-        let cborData = try Bytewords.decode(body, style: .minimal)
-        let cbor = try CBOR(cborData)
-        return try UR(type: type, cbor: cbor)
+        let cbor = try Bytewords.decode(body, style: .minimal)
+        return try UR(type: type, cborData: cbor)
     }
 
     let fountainDecoder: FountainDecoder
@@ -99,12 +98,8 @@ public final class URDecoder {
             }
 
             switch fountainDecoder.result {
-            case .success(let cborData)?:
-                if let cbor = try? CBOR(cborData) {
-                    result = try! .success(UR(type: type, cbor: cbor))
-                } else {
-                    result = .failure(URError.invalidCBOR)
-                }
+            case .success(let cbor)?:
+                result = try! .success(UR(type: type, cborData: cbor))
             case .failure(let error)?:
                 result = .failure(error)
             case nil:

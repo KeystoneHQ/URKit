@@ -5,9 +5,10 @@ import PackageDescription
 let package = Package(
     name: "URKit",
     platforms: [
-        .macOS(.v11),
-        .iOS(.v14),
-        .macCatalyst(.v14)
+        .macOS(.v12),
+        .iOS(.v13),
+        .tvOS(.v13),
+        .watchOS(.v8)
     ],
     products: [
         .library(
@@ -15,15 +16,13 @@ let package = Package(
             targets: ["URKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/BlockchainCommons/BCSwiftDCBOR", from: "0.2.0"),
-        .package(url: "https://github.com/BlockchainCommons/BCSwiftCrypto.git", from: "0.1.0")
+        .package(url: "https://github.com/KeystoneHQ/BCSwiftDCBOR.git", from: "0.10.0")
     ],
     targets: [
         .target(
             name: "URKit",
             dependencies: [
                 .product(name: "DCBOR", package: "BCSwiftDCBOR"),
-                .product(name: "BCCrypto", package: "BCSwiftCrypto"),
             ]
         ),
         .testTarget(
