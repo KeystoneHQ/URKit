@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BCCrypto
 
 // Implements Luby transform code rateless decoding
 // https://en.wikipedia.org/wiki/Luby_transform_code
@@ -43,6 +44,8 @@ public final class FountainDecoder {
     var simpleParts: PartDict = [:]
     var mixedParts: PartDict = [:]
     var queuedParts: [Part] = []
+    
+    private var fragmentChooser: FragmentChooser!
 
     public var estimatedPercentComplete: Double {
         guard result == nil else { return 1 }
@@ -57,9 +60,9 @@ public final class FountainDecoder {
 
         var index: Int { partIndexes.first! }
 
-        init(_ p: FountainEncoder.Part) {
-            partIndexes = chooseFragments(seqNum: p.seqNum, seqLen: p.seqLen, checksum: p.checksum)
+        init(_ p: FountainEncoder.Part, partIndexes: PartIndexes) {
             data = p.data
+            self.partIndexes = partIndexes
         }
 
         init(partIndexes: PartIndexes, data: Data) {
@@ -82,8 +85,13 @@ public final class FountainDecoder {
         // Don't continue if this part doesn't validate
         guard validatePart(encoderPart) else { return false }
 
+        if fragmentChooser == nil {
+            self.fragmentChooser = FragmentChooser(seqLen: encoderPart.seqLen, checksum: encoderPart.checksum)
+        }
+
         // Add this part to the queue
-        let part = Part(encoderPart)
+        let partIndexes = fragmentChooser.chooseFragments(at: encoderPart.seqNum)
+        let part = Part(encoderPart, partIndexes: partIndexes)
         lastPartIndexes = part.partIndexes
         enqueue(part)
 
@@ -198,7 +206,7 @@ public final class FountainDecoder {
             let message = Self.joinFragments(fragments, messageLen: expectedMessageLen)
 
             // Verify the message checksum and note success or failure
-            let checksum = CRC32.checksum(data: message)
+            let checksum = crc32(message)
             if checksum == expectedChecksum {
                 result = .success(message)
             } else {

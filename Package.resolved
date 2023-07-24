@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "bcswiftcrypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KeystoneHQ/BCSwiftCrypto.git",
+      "state" : {
+        "revision" : "f3b7faadfbd681786e9db73d66d3fe1053628fe5",
+        "version" : "0.9.0"
+      }
+    },
+    {
       "identity" : "bcswiftdcbor",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KeystoneHQ/BCSwiftDCBOR.git",
@@ -16,6 +25,33 @@
       "state" : {
         "revision" : "5781bf741d202b69ffaa98c5e84e1229bd99e694",
         "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "32f641cf24fc7abc1c591a2025e9f2f572648b0f",
+        "version" : "1.7.2"
+      }
+    },
+    {
+      "identity" : "secp256k1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/portto/secp256k1.git",
+      "state" : {
+        "revision" : "6864a2560066cedede330c4b344689432a7300f7",
+        "version" : "0.0.5"
+      }
+    },
+    {
+      "identity" : "secp256k1.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KeystoneHQ/secp256k1.swift.git",
+      "state" : {
+        "revision" : "95bfcee9f194c7a0d52ec29f40bf884812559a7c",
+        "version" : "0.8.1"
       }
     },
     {
