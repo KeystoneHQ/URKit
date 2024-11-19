@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KeystoneHQ/BCSwiftDCBOR.git",
       "state" : {
-        "revision" : "1830abea38243eac9ccc5e1f8c03244073791a4d",
-        "version" : "0.10.0"
+        "revision" : "0330a29a502a43e0c5da1289f00bfa0c1488378c",
+        "version" : "0.11.1"
       }
     },
     {
@@ -57,10 +57,19 @@
     {
       "identity" : "swift-collections",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/wolfmcnally/swift-collections",
+      "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "53a8adc54374f620002a3b6401d39e0feb3c57ae",
+        "revision" : "94cf62b3ba8d4bed62680a282d4c25f9c63c2efb",
         "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-collections-sorted-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soralit/swift-collections-sorted-collections",
+      "state" : {
+        "revision" : "eebe309da4f42ab6a38a057c74b3d8e7b4233b38",
+        "version" : "1.2.2"
       }
     }
   ],
