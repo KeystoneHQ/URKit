@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "URKit"
-  spec.version      = "11.4.0"
+  spec.version      = "11.5.0"
   spec.summary      = "UR (Uniform Resources) reference framework for Swift"
   spec.description  = "An iOS framework for encoding and decoding URs (Uniform Resources)"
   spec.homepage     = "https://github.com/KeystoneHQ/URKit.git"
